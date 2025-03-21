@@ -1,0 +1,58 @@
+<!-- Criado por Marise Miranda | 2017.1 -->
+<!-- Adaptado por Matheus Matos | 2025.1 -->
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPTecher's Machine</title>
+</head>
+
+<body>
+
+    <h1>SPTecher's Machine</h1>
+
+    <div>
+        <h3>Digite um número:</h3>
+        <input id="demo1" type="text" placeholder="Ex: 42">
+    </div>
+    <br>
+    
+    <div>
+        <p>A base desse número é:</p>
+        <div>
+            <input type="checkbox" id="isBinario"> <label for="isBinario">Binário</label> <br>
+            <input type="checkbox" id="isOctal"> <label for="isOctal">Octal</label> <br>
+            <input type="checkbox" id="isDecimal"> <label for="isDecimal">Decimal</label> <br>
+            <input type="checkbox" id="isHexadecimal"> <label for="isHexadecimal">Hexadecimal</label>
+        </div>
+    </div>
+    
+    <br><br>
+
+    <button onclick="converter()">Converter</button>
+
+    <b><p>Resultados:</p></b>
+    <p id="resultOctal">Octal:
+    <label for="resultOctal" id="demo2"></label>
+    </p>
+    <p id="resultHexa">Hexadecimal:
+    <label for="resultHexa" id="demo3"></label>
+    </p>
+    <p id="resultBinario">Binário:
+    <label id="demo4"></label>
+    </p>
+    <script>
+        function converter() {
+            var decimal = Number(demo1.value);
+
+            demo2.innerHTML = decimal.toString(8);
+            demo3.innerHTML = decimal.toString(16);
+            demo4.innerHTML = decimal.toString(2);
+        }
+    </script>
+</body>
+
+</html>
