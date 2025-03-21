@@ -1,0 +1,22 @@
+requisitos para adicionar:
+html:
+adicionar checkbox da base numerica selecionada
+adicionar label para o resultado sair do lado da base ao invés de sair abaixo da base na área do resultado
+dois botoes com a logo do github redirecionando para o perfil dos membros da dupla
+botao de modo escuro no canto superior direito da tela
+
+js:
+o input precisa de validação para cada base numérica, se conter um algarismo que não pertence a base numérica, enviar um alert para o usuário
+4 checkboxes: quando uma for selecionada, as outras 3 tem não podem estar selecionadas (deselect nas outras)
+o resultado tem que sair apenas nas 3 outras bases que não foram selecionadas
+dois redirecionamentos para página do githubdos membros da dupla com
+botão de modo claro / modo escuro
+botao de copiar número para cada base
+
+css:
+caixa branca com arredondamento no centro da tela
+estilização dos botões
+hover dos botoes
+fote customizada
+modo escuro
+sombra atrá da caixa
