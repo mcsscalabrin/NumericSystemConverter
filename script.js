@@ -1,134 +1,137 @@
-// Base validation patterns
-const basePatterns = {
-    binario: /^[01]+$/,
-    octal: /^[0-7]+$/,
-    decimal: /^[0-9]+$/,
-    hexadecimal: /^[0-9A-Fa-f]+$/
+// Padrões para validação de cada base numérica
+var padroesBases = {
+    binario: ['0', '1'],
+    octal: ['0', '1', '2', '3', '4', '5', '6', '7'],
+    decimal: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    hexadecimal: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f']
 };
 
-// GitHub profiles
-const githubProfiles = {
-    member1: "https://github.com/your-username1",
-    member2: "https://github.com/your-username2"
-};
-
-// Theme management
-function toggleTheme() {
-    const body = document.body;
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-}
-
-// Initialize theme
-function initializeTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.body.setAttribute('data-theme', savedTheme);
-}
-
-// Checkbox management
-function handleCheckboxChange(changedCheckbox) {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(checkbox => {
-        if (checkbox !== changedCheckbox) {
-            checkbox.checked = false;
+// Função para validar entrada de acordo com a base
+function validarEntrada(valor, base) {
+    var caracteresValidos = padroesBases[base];
+    for (var i = 0; i < valor.length; i++) {
+        if (caracteresValidos.indexOf(valor[i]) == -1) {
+            return false;
         }
-    });
-}
-
-// Base validation
-function validateInput(input, base) {
-    const pattern = basePatterns[base];
-    if (!pattern.test(input)) {
-        alert(`O número contém caracteres inválidos para a base ${base}!`);
-        return false;
     }
     return true;
 }
 
-// Convert number to different bases
-function convertNumber(input, fromBase) {
-    let decimal;
+// Mapeamento de bases para seus valores numéricos
+const mapaBases = {
+    binario: 2,
+    octal: 8,
+    decimal: 10,
+    hexadecimal: 16
+};
+
+// Converte um número de uma base para todas as outras
+function converterNumero(entrada, deBase) {
+    var decimal = parseInt(entrada, mapaBases[deBase]);
+    if (!decimal && decimal !== 0) return null;
     
-    switch(fromBase) {
-        case 'binario':
-            decimal = parseInt(input, 2);
-            break;
-        case 'octal':
-            decimal = parseInt(input, 8);
-            break;
-        case 'decimal':
-            decimal = parseInt(input, 10);
-            break;
-        case 'hexadecimal':
-            decimal = parseInt(input, 16);
-            break;
+    var resultado = {};
+    for (var base in mapaBases) {
+        var valor = decimal.toString(mapaBases[base]);
+        if (base == 'hexadecimal') {
+            valor = valor.toUpperCase();
+        }
+        resultado[base] = valor;
+    }
+    return resultado;
+}
+
+// Alterna entre tema claro e escuro
+function alternarTema() {
+    var tema = document.body.dataset.theme;
+    if (tema == 'dark') {
+        document.body.dataset.theme = '';
+    } else {
+        document.body.dataset.theme = 'dark';
+    }
+    // Removida a linha: localStorage.setItem('tema', document.body.dataset.theme);
+}
+
+// Inicialização quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    // Removido o código que restaura o tema salvo:
+    // var tema = localStorage.getItem('tema');
+    // if (tema) {
+    //     document.body.dataset.theme = tema;
+    // }
+
+    // Configura os checkboxes
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].onchange = function(e) {
+            if (e.target.checked) {
+                gerenciarCheckboxes(e.target);
+            }
+        };
     }
 
-    return {
-        binario: decimal.toString(2),
-        octal: decimal.toString(8),
-        decimal: decimal.toString(10),
-        hexadecimal: decimal.toString(16).toUpperCase()
-    };
+    // Configura o botão de alternar tema
+    document.querySelector('#alternarTema').onclick = alternarTema;
+});
+
+// Gerencia os checkboxes para permitir apenas um selecionado
+function gerenciarCheckboxes(checkboxClicado) {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var checkbox of checkboxes) {
+        if (checkbox != checkboxClicado) {
+            checkbox.checked = false;
+        }
+    }
 }
 
-// Copy to clipboard function
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Copiado para a área de transferência!');
-    }).catch(err => {
-        console.error('Erro ao copiar:', err);
-    });
-}
-
-// Main conversion function
+// Função principal de conversão
 function converter() {
-    const input = document.getElementById('demo1').value;
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let selectedBase = null;
-
-    // Find selected base
-    checkboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-            selectedBase = checkbox.id.replace('is', '').toLowerCase();
+    var entrada = document.querySelector('#entrada').value;
+    if (!entrada) {
+        alert('Digite um número!');
+        return;
+    }
+    
+    var bases = ['ehBinario', 'ehOctal', 'ehDecimal', 'ehHexadecimal'];
+    var baseOrigem = null;
+    
+    for (var base of bases) {
+        if (document.querySelector('#' + base).checked) {
+            baseOrigem = base;
+            break;
         }
-    });
-
-    if (!selectedBase) {
-        alert('Por favor, selecione uma base numérica!');
+    }
+    if (!baseOrigem) {
+        alert('Selecione a base do número!');
         return;
     }
 
-    // Validate input
-    if (!validateInput(input, selectedBase)) {
+    const baseNormalizada = baseOrigem.replace('eh', '').toLowerCase();
+    
+    if (!validarEntrada(entrada, baseNormalizada)) {
+        alert('Número inválido para a base selecionada!');
         return;
     }
 
-    // Convert number
-    const results = convertNumber(input, selectedBase);
-
-    // Update results
-    Object.entries(results).forEach(([base, value]) => {
-        const resultElement = document.getElementById(`result${base.charAt(0).toUpperCase() + base.slice(1)}`);
-        if (base === selectedBase) {
-            resultElement.textContent = input;
-        } else {
-            resultElement.textContent = value;
-        }
-    });
+    const resultados = converterNumero(entrada, baseNormalizada);
+    if (resultados) {
+        Object.entries(resultados).forEach(([base, valor]) => {
+            document.querySelector(`#resultado${base.charAt(0).toUpperCase() + base.slice(1)}`).textContent = valor;
+        });
+    }
 }
 
-// Initialize event listeners
-document.addEventListener('DOMContentLoaded', () => {
-    initializeTheme();
-
-    // Add checkbox event listeners
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', (e) => handleCheckboxChange(e.target));
-    });
-
-    // Add theme toggle listener
-    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-}); 
+// Copia o resultado para a área de transferência
+function copiarParaAreaTransferencia(texto, botao) {
+    navigator.clipboard.writeText(texto);
+    
+    // Feedback visual
+    var textoOriginal = botao.textContent;
+    botao.textContent = "Copiado!";
+    botao.style.backgroundColor = "#4CAF50";
+    
+    setTimeout(function() {
+        botao.textContent = textoOriginal;
+        botao.style.backgroundColor = "";
+    }, 1500);
+}

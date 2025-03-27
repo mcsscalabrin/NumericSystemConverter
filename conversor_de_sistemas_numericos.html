@@ -1,72 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conversor de Bases Numéricas">
     <title>SPTecher's Machine</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <button id="themeToggle" class="theme-toggle">🌓</button>
+    <!-- Botão de alternar tema -->
+    <button id="alternarTema" class="alternar-tema" aria-label="Alternar tema">🔆</button>
 
-    <div class="container">
-        <h1>SPTecher's Machine</h1>
+    <main class="container">
+        <!-- Cabeçalho com título e avatares -->
+        <header class="cabecalho">
+            <img src="imagens/4.png" alt="Avatar 1" class="avatar">
+            <h1>SPTecher's Machine</h1>
+            <img src="imagens/5.png" alt="Avatar 2" class="avatar">
+        </header>
 
-        <div class="input-group">
+        <!-- Entrada de dados -->
+        <section class="grupo-entrada">
             <h3>Digite um número:</h3>
-            <input id="demo1" type="text" placeholder="Ex: 10">
-        </div>
+            <input id="entrada" type="text" placeholder="Ex: 10">
+        </section>
         
-        <div class="checkbox-group">
+        <!-- Seleção de base numérica -->
+        <div class="grupo-checkbox">
             <p>A base desse número é:</p>
             <div>
-                <input type="checkbox" id="isBinario"> <label for="isBinario">Binário</label> <br>
-                <input type="checkbox" id="isOctal"> <label for="isOctal">Octal</label> <br>
-                <input type="checkbox" id="isDecimal"> <label for="isDecimal">Decimal</label> <br>
-                <input type="checkbox" id="isHexadecimal"> <label for="isHexadecimal">Hexadecimal</label>
+                <input type="checkbox" id="ehBinario"> <label for="ehBinario">Binário</label> <br>
+                <input type="checkbox" id="ehOctal"> <label for="ehOctal">Octal</label> <br>
+                <input type="checkbox" id="ehDecimal"> <label for="ehDecimal">Decimal</label> <br>
+                <input type="checkbox" id="ehHexadecimal"> <label for="ehHexadecimal">Hexadecimal</label>
             </div>
         </div>
         
+        <!-- Botão de conversão -->
         <button onclick="converter()">Converter</button>
 
-        <div class="result-group">
-            <div class="result-item">
-                <p>Binário: <span id="resultBinario"></span></p>
-                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('resultBinario').textContent)">Copiar</button>
+        <!-- Resultados da conversão -->
+        <div class="grupo-resultado">
+            <h3>Resultados:</h3>
+            <div class="item-resultado">
+                <p>Binário: <span id="resultadoBinario"></span></p>
+                <button class="botao-copiar" onclick="copiarParaAreaTransferencia(document.getElementById('resultadoBinario').textContent, this)">Copiar!</button>
             </div>
-            <div class="result-item">
-                <p>Octal: <span id="resultOctal"></span></p>
-                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('resultOctal').textContent)">Copiar</button>
+            <div class="item-resultado">
+                <p>Octal: <span id="resultadoOctal"></span></p>
+                <button class="botao-copiar" onclick="copiarParaAreaTransferencia(document.getElementById('resultadoOctal').textContent, this)">Copiar!</button>
             </div>
-            <div class="result-item">
-                <p>Decimal: <span id="resultDecimal"></span></p>
-                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('resultDecimal').textContent)">Copiar</button>
+            <div class="item-resultado">
+                <p>Decimal: <span id="resultadoDecimal"></span></p>
+                <button class="botao-copiar" onclick="copiarParaAreaTransferencia(document.getElementById('resultadoDecimal').textContent, this)">Copiar!</button>
             </div>
-            <div class="result-item">
-                <p>Hexadecimal: <span id="resultHexadecimal"></span></p>
-                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('resultHexadecimal').textContent)">Copiar</button>
+            <div class="item-resultado">
+                <p>Hexadecimal: <span id="resultadoHexadecimal"></span></p>
+                <button class="botao-copiar" onclick="copiarParaAreaTransferencia(document.getElementById('resultadoHexadecimal').textContent, this)">Copiar!</button>
             </div>
         </div>
-
-        <div class="github-links">
-            <a href="https://github.com/mcsscalabrin" class="github-btn" target="_blank">
-                <svg height="32" width="32" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
-                </svg>
-                <span>mcsscalabrin</span>
-            </a>
-            <a href="https://github.com/PereiragGabriel" class="github-btn" target="_blank">
-                <svg height="32" width="32" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
-                </svg>
-                <span>PereiragGabriel</span>
-            </a>
-        </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
-
 </html>
