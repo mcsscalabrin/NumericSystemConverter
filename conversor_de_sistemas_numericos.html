@@ -4,60 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Conversor de Bases Numéricas">
-    <title>SPTecher's Machine</title>
+    <title>Máquina SPTecher</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <!-- Botão de alternar tema -->
-    <button id="alternarTema" class="alternar-tema" aria-label="Alternar tema">🔆</button>
+    <button onclick="alternarTema()" id="alternarTema" class="alternar-tema" aria-label="Alternar tema">🔆</button>
 
     <main class="container">
-        <!-- Cabeçalho com título e avatares -->
         <header class="cabecalho">
             <img src="imagens/4.png" alt="Avatar 1" class="avatar">
-            <h1>SPTecher's Machine</h1>
+            <h1>Máquina SPTecher</h1>
             <img src="imagens/5.png" alt="Avatar 2" class="avatar">
         </header>
 
-        <!-- Entrada de dados -->
         <section class="grupo-entrada">
             <h3>Digite um número:</h3>
-            <input id="entrada" type="text" placeholder="Ex: 10">
+            <input type="text" id="entrada" placeholder="Ex: 10">
         </section>
         
-        <!-- Seleção de base numérica -->
         <div class="grupo-checkbox">
             <p>A base desse número é:</p>
             <div>
-                <input type="checkbox" id="ehBinario"> <label for="ehBinario">Binário</label> <br>
-                <input type="checkbox" id="ehOctal"> <label for="ehOctal">Octal</label> <br>
-                <input type="checkbox" id="ehDecimal"> <label for="ehDecimal">Decimal</label> <br>
-                <input type="checkbox" id="ehHexadecimal"> <label for="ehHexadecimal">Hexadecimal</label>
+                <input type="checkbox" id="ehBinario" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label for="ehBinario">Binário</label><br>
+                <input type="checkbox" id="ehOctal" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label for="ehOctal">Octal</label><br>
+                <input type="checkbox" id="ehDecimal" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label for="ehDecimal">Decimal</label><br>
+                <input type="checkbox" id="ehHexadecimal" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label for="ehHexadecimal">Hexadecimal</label>
             </div>
         </div>
         
-        <!-- Botão de conversão -->
         <button onclick="converter()">Converter</button>
 
-        <!-- Resultados da conversão -->
         <div class="grupo-resultado">
             <h3>Resultados:</h3>
             <div class="item-resultado">
                 <p>Binário: <span id="resultadoBinario"></span></p>
-                <button class="botao-copiar" onclick="copiarParaAreaTransferencia(document.getElementById('resultadoBinario').textContent, this)">Copiar!</button>
             </div>
             <div class="item-resultado">
                 <p>Octal: <span id="resultadoOctal"></span></p>
-                <button class="botao-copiar" onclick="copiarParaAreaTransferencia(document.getElementById('resultadoOctal').textContent, this)">Copiar!</button>
             </div>
             <div class="item-resultado">
                 <p>Decimal: <span id="resultadoDecimal"></span></p>
-                <button class="botao-copiar" onclick="copiarParaAreaTransferencia(document.getElementById('resultadoDecimal').textContent, this)">Copiar!</button>
             </div>
             <div class="item-resultado">
                 <p>Hexadecimal: <span id="resultadoHexadecimal"></span></p>
-                <button class="botao-copiar" onclick="copiarParaAreaTransferencia(document.getElementById('resultadoHexadecimal').textContent, this)">Copiar!</button>
             </div>
         </div>
     </main>

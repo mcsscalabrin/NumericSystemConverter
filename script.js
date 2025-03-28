@@ -1,47 +1,51 @@
-// Padrões para validação de cada base numérica
-var padroesBases = {
-    binario: ['0', '1'],
-    octal: ['0', '1', '2', '3', '4', '5', '6', '7'],
-    decimal: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    hexadecimal: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f']
-};
+// Arrays com caracteres válidos para cada base
+var caracteresBinario = ['0', '1'];
+var caracteresOctal = ['0', '1', '2', '3', '4', '5', '6', '7'];
+var caracteresDecimal = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+var caracteresHexadecimal = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f'];
 
-// Função para validar entrada de acordo com a base
+// Função para validar entrada
 function validarEntrada(valor, base) {
-    var caracteresValidos = padroesBases[base];
+    var caracteresValidos;
+    
+    if (base == 'binario') caracteresValidos = caracteresBinario;
+    if (base == 'octal') caracteresValidos = caracteresOctal;
+    if (base == 'decimal') caracteresValidos = caracteresDecimal;
+    if (base == 'hexadecimal') caracteresValidos = caracteresHexadecimal;
+    
     for (var i = 0; i < valor.length; i++) {
-        if (caracteresValidos.indexOf(valor[i]) == -1) {
-            return false;
+        var caracterValido = false;
+        for (var j = 0; j < caracteresValidos.length; j++) {
+            if (valor[i] == caracteresValidos[j]) {
+                caracterValido = true;
+                break;
+            }
         }
+        if (!caracterValido) return false;
     }
     return true;
 }
 
-// Mapeamento de bases para seus valores numéricos
-const mapaBases = {
-    binario: 2,
-    octal: 8,
-    decimal: 10,
-    hexadecimal: 16
-};
-
-// Converte um número de uma base para todas as outras
+// Função para converter número
 function converterNumero(entrada, deBase) {
-    var decimal = parseInt(entrada, mapaBases[deBase]);
+    var valorBase;
+    if (deBase == 'binario') valorBase = 2;
+    if (deBase == 'octal') valorBase = 8;
+    if (deBase == 'decimal') valorBase = 10;
+    if (deBase == 'hexadecimal') valorBase = 16;
+    
+    var decimal = parseInt(entrada, valorBase);
     if (!decimal && decimal !== 0) return null;
     
-    var resultado = {};
-    for (var base in mapaBases) {
-        var valor = decimal.toString(mapaBases[base]);
-        if (base == 'hexadecimal') {
-            valor = valor.toUpperCase();
-        }
-        resultado[base] = valor;
-    }
-    return resultado;
+    return [
+        decimal.toString(2),
+        decimal.toString(8),
+        decimal.toString(10),
+        decimal.toString(16).toUpperCase()
+    ];
 }
 
-// Alterna entre tema claro e escuro
+// Função para alternar tema
 function alternarTema() {
     var tema = document.body.dataset.theme;
     if (tema == 'dark') {
@@ -49,89 +53,49 @@ function alternarTema() {
     } else {
         document.body.dataset.theme = 'dark';
     }
-    // Removida a linha: localStorage.setItem('tema', document.body.dataset.theme);
 }
 
-// Inicialização quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', function() {
-    // Removido o código que restaura o tema salvo:
-    // var tema = localStorage.getItem('tema');
-    // if (tema) {
-    //     document.body.dataset.theme = tema;
-    // }
-
-    // Configura os checkboxes
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].onchange = function(e) {
-            if (e.target.checked) {
-                gerenciarCheckboxes(e.target);
-            }
-        };
-    }
-
-    // Configura o botão de alternar tema
-    document.querySelector('#alternarTema').onclick = alternarTema;
-});
-
-// Gerencia os checkboxes para permitir apenas um selecionado
+// Função para gerenciar checkboxes
 function gerenciarCheckboxes(checkboxClicado) {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (var checkbox of checkboxes) {
-        if (checkbox != checkboxClicado) {
-            checkbox.checked = false;
+    var checkboxes = document.getElementsByTagName('input');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type == 'checkbox' && checkboxes[i] != checkboxClicado) {
+            checkboxes[i].checked = false;
         }
     }
 }
 
-// Função principal de conversão
+// Função principal
 function converter() {
-    var entrada = document.querySelector('#entrada').value;
-    if (!entrada) {
+    var entrada = document.getElementById('entrada').value;
+    if (entrada == '') {
         alert('Digite um número!');
         return;
     }
     
-    var bases = ['ehBinario', 'ehOctal', 'ehDecimal', 'ehHexadecimal'];
-    var baseOrigem = null;
+    var baseOrigem = '';
+    if (document.getElementById('ehBinario').checked) baseOrigem = 'binario';
+    if (document.getElementById('ehOctal').checked) baseOrigem = 'octal';
+    if (document.getElementById('ehDecimal').checked) baseOrigem = 'decimal';
+    if (document.getElementById('ehHexadecimal').checked) baseOrigem = 'hexadecimal';
     
-    for (var base of bases) {
-        if (document.querySelector('#' + base).checked) {
-            baseOrigem = base;
-            break;
-        }
-    }
-    if (!baseOrigem) {
+    if (baseOrigem == '') {
         alert('Selecione a base do número!');
         return;
     }
-
-    const baseNormalizada = baseOrigem.replace('eh', '').toLowerCase();
     
-    if (!validarEntrada(entrada, baseNormalizada)) {
+    if (validarEntrada(entrada, baseOrigem) == false) {
         alert('Número inválido para a base selecionada!');
         return;
     }
 
-    const resultados = converterNumero(entrada, baseNormalizada);
-    if (resultados) {
-        Object.entries(resultados).forEach(([base, valor]) => {
-            document.querySelector(`#resultado${base.charAt(0).toUpperCase() + base.slice(1)}`).textContent = valor;
-        });
+    var resultados = converterNumero(entrada, baseOrigem);
+    if (resultados == null) {
+        return;
     }
-}
-
-// Copia o resultado para a área de transferência
-function copiarParaAreaTransferencia(texto, botao) {
-    navigator.clipboard.writeText(texto);
     
-    // Feedback visual
-    var textoOriginal = botao.textContent;
-    botao.textContent = "Copiado!";
-    botao.style.backgroundColor = "#4CAF50";
-    
-    setTimeout(function() {
-        botao.textContent = textoOriginal;
-        botao.style.backgroundColor = "";
-    }, 1500);
+    document.getElementById('resultadoBinario').textContent = resultados[0];
+    document.getElementById('resultadoOctal').textContent = resultados[1];
+    document.getElementById('resultadoDecimal').textContent = resultados[2];
+    document.getElementById('resultadoHexadecimal').textContent = resultados[3];
 }
