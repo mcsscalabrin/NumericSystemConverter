@@ -1,56 +1,66 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Conversor de Bases Numéricas">
-    <title>Máquina SPTecher</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <button onclick="alternarTema()" id="alternarTema" class="alternar-tema" aria-label="Alternar tema">🔆</button>
 
-    <main class="container">
-        <header class="cabecalho">
-            <img src="imagens/4.png" alt="Avatar 1" class="avatar">
-            <h1>Máquina SPTecher</h1>
-            <img src="imagens/5.png" alt="Avatar 2" class="avatar">
-        </header>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Conversor de Bases Numéricas">
+        <title>Máquina SPTecher</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
 
-        <section class="grupo-entrada">
-            <h3>Digite um número:</h3>
-            <input type="text" id="entrada" placeholder="Ex: 10">
-        </section>
-        
-        <div class="grupo-checkbox">
-            <p>A base desse número é:</p>
-            <div>
-                <input type="checkbox" id="ehBinario" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label for="ehBinario">Binário</label><br>
-                <input type="checkbox" id="ehOctal" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label for="ehOctal">Octal</label><br>
-                <input type="checkbox" id="ehDecimal" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label for="ehDecimal">Decimal</label><br>
-                <input type="checkbox" id="ehHexadecimal" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label for="ehHexadecimal">Hexadecimal</label>
-            </div>
-        </div>
-        
-        <button onclick="converter()">Converter</button>
+    <body>
+        <button
+            onclick="alternarTema(); this.classList.add('clicado'); setTimeout(() => this.classList.remove('clicado'), 300)"
+            id="alternarTema" class="alternar-tema" aria-label="Alternar tema">🔆</button>
 
-        <div class="grupo-resultado">
-            <h3>Resultados:</h3>
-            <div class="item-resultado">
-                <p>Binário: <span id="resultadoBinario"></span></p>
-            </div>
-            <div class="item-resultado">
-                <p>Octal: <span id="resultadoOctal"></span></p>
-            </div>
-            <div class="item-resultado">
-                <p>Decimal: <span id="resultadoDecimal"></span></p>
-            </div>
-            <div class="item-resultado">
-                <p>Hexadecimal: <span id="resultadoHexadecimal"></span></p>
-            </div>
-        </div>
-    </main>
+        <main class="container">
+            <header class="cabecalho">
+                <img src="imagens/4.png" alt="Matheus" class="avatar">
+                <h1>Máquina SPTecher</h1>
+                <img src="imagens/5.png" alt="Davi" class="avatar">
+            </header>
 
-    <script src="script.js"></script>
-</body>
+            <section class="grupo-entrada">
+                <h3>Digite um número:</h3>
+                <input type="text" id="entrada" placeholder="Ex: 10">
+            </section>
+
+            <div class="grupo-checkbox">
+                <p>A base desse número é:</p>
+                <div>
+                    <input type="checkbox" id="ehBinario" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label
+                        for="ehBinario">Binário</label><br>
+                    <input type="checkbox" id="ehOctal" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label
+                        for="ehOctal">Octal</label><br>
+                    <input type="checkbox" id="ehDecimal" onclick="if(this.checked) gerenciarCheckboxes(this)"> <label
+                        for="ehDecimal">Decimal</label><br>
+                    <input type="checkbox" id="ehHexadecimal" onclick="if(this.checked) gerenciarCheckboxes(this)">
+                    <label for="ehHexadecimal">Hexadecimal</label>
+                </div>
+            </div>
+
+            <button onclick="converter()">Converter</button>
+
+            <div class="grupo-resultado">
+                <h3>Resultados:</h3>
+                <div class="item-resultado">
+                    <p>Binário: <span id="resultadoBinario"></span></p>
+                </div>
+                <div class="item-resultado">
+                    <p>Octal: <span id="resultadoOctal"></span></p>
+                </div>
+                <div class="item-resultado">
+                    <p>Decimal: <span id="resultadoDecimal"></span></p>
+                </div>
+                <div class="item-resultado">
+                    <p>Hexadecimal: <span id="resultadoHexadecimal"></span></p>
+                </div>
+            </div>
+        </main>
+
+    </body>
+
 </html>
+
+<script src="script.js"></script>
