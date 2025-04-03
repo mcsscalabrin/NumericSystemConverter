@@ -2,30 +2,7 @@
 var caracteresBinario = ["0", "1"];
 var caracteresOctal = ["0", "1", "2", "3", "4", "5", "6", "7"];
 var caracteresDecimal = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var caracteresHexadecimal = [
-  "0",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-];
+var caracteresHexadecimal = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "a", "b", "c", "d", "e", "f"];
 
 // Função para validar entrada
 function validarEntrada(valor, base) {
